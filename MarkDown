@@ -88,21 +88,43 @@ describe(d$alter)
 ```
 
 
-## Deskriptive Analyse (restliche Variablen)
+## RQ1: Wie lange wartet man auf einen Therapieplatz?
+## RQ1.1: Nach welcher Wartezeit geben Menschen die Suche auf?
 ```{r}
-#Wartezeit für die Gruppen festlegen
+#### Wartezeit für die Gruppen festlegen ####
+```
 
+## RQ2: Wie haben sich die Wartezeiten in den vergangenen Jahren entwickelt
+```{r}
+##Zeitreihe der Wartezeiten für die verschiedenen Gruppen anschauen
+```
+
+## H1: Gesetzlich versicherte warten länger als Privatzahler (Kontrolle Selbstzahler)
+```{r}
+```
+
+## H2: Menschen mit besonderen Bedürfnissen warten länger auf einen Therapieplatz
+```{r}
+```
+
+## H3: Menschen mit Migrationsgeschichte warten länger auf einen Therapieplatz
+```{r}
 ```
 
 
-##Zusammenhänge untersuchen
+## RQ3: Gibt es Geschlechterunterschiede bei den Wartezeiten?
 ```{r}
+```
 
+## RQ4: Wirken sich bestimmte Erkrankungen auf die Länge der Wartezeiten aus?
+```{r}
+```
+
+## RQ5: Gibt es Unterschiede zwischen städtischen und ländlichen Gebieten
+```{r}
 ```
 
 
-## Erste Graphen
+## RQ6: Was sind die grössten Hürden bei der Therapieplatzsuche?
 ```{r}
-
-```
-
+###Analyse Freitexte: Datensatz in Excel durchschauen und in neuer Spalte Freitext codieren
