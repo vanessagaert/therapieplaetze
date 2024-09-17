@@ -1,0 +1,130 @@
+---
+title: "Therapieplätze"
+author: "Vanessa Gärtner & Katharina Kausche"
+date: "1/29/2023"
+output: html_document
+---
+
+## Pakete laden
+
+```{r setup, include=FALSE, echo=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library("haven")
+library("tidyverse")
+library("psych")
+library("readr")
+library("psych")
+library("car")
+library("dplyr")
+library("ggplot2")
+library("DescTools")
+```
+
+## Datensatz einlesen 
+
+```{r daten, echo=FALSE}
+#Unser Datensatz
+d1 <- read_sav("daten.sav")
+
+#Tabelle mit PLZ Codes einlesen
+plz <- read.csv("georef-germany-postleitzahl_neu.csv")
+```
+
+## Bereinigung
+```{r bereinigung, echo=FALSE}
+#### Abbrecher entfernen und TN mit sehr kurzen Antwortdauern ####
+d <- subset(d1, ExportSummary_3 == 1 & ExportSummary_6 < 0.5*(mean(d1$ExportSummary_6, na.rm = TRUE)))
+
+#### TN mit sehr vielen fehlende Antworten entfernen?? ####
+
+#### unnötige Spalten entfernen ####
+d$PersonalID <- NULL
+d$ExportSummary_4 <- NULL
+d$ExportSummary_5 <- NULL
+d$ExportSummary_6 <- NULL
+d$ExportSummary_3 <- NULL
+d$ExportURL <- NULL
+d$q1_1 <- NULL
+
+##### neue Variable Bundesland ####
+
+#Spalte PLZ umbenennen
+d %>%
+  rename(plz = q1_1_t)
+
+#Tabellen verbinden
+left_join(d, plz, by = "plz")
+
+#neue Variable Stadt vs. Land?? - wie hier am besten vorgehen (vielleicht auch erst in einem zweiten Schritt)
+
+#Wie umgehen mit den Spalten, die im falschen Format sind?? 
+
+#### Teilnahmebedingung: Suche nach 2018; Subsets für einzelne Fälle erstellen ####
+suche_1 <- select(d$q3 = 1 & d$q9_2_t >= 2018)
+suche_2 <- select(d$q3 = 2 & d$q9_2_t >= 2018)
+suche_3 <- select(d$q3 = 3 & d$q9_2_t >= 2018)
+
+
+```
+
+
+##Deskriptive Analyse (Demografie)
+```{r descriptives, echo=FALSE}
+#### Demografische Angaben: Beamtenstatus = q1_7, Migrationshintergrund = q2
+descriptives <- describe(d)
+
+#Postleitzahlen -> Ungleichgewichte in den Bundesländern?? 
+bundesland <- table(d$bundesland)
+prop.table(bundesland)
+
+#Geschlecht 
+geschlecht <- table(d$q1_3)
+prop.table(geschlecht)
+
+#Alter 
+d$alter <- 2022 - d$q1_2_t
+describe(d$alter)
+
+```
+
+
+## RQ1: Wie lange wartet man auf einen Therapieplatz?
+## RQ1.1: Nach welcher Wartezeit geben Menschen die Suche auf?
+```{r}
+#### Wartezeit für die Gruppen festlegen ####
+```
+
+## RQ2: Wie haben sich die Wartezeiten in den vergangenen Jahren entwickelt
+```{r}
+##Zeitreihe der Wartezeiten für die verschiedenen Gruppen anschauen
+```
+
+## H1: Gesetzlich versicherte warten länger als Privatzahler (Kontrolle Selbstzahler)
+```{r}
+```
+
+## H2: Menschen mit besonderen Bedürfnissen warten länger auf einen Therapieplatz
+```{r}
+```
+
+## H3: Menschen mit Migrationsgeschichte warten länger auf einen Therapieplatz
+```{r}
+```
+
+
+## RQ3: Gibt es Geschlechterunterschiede bei den Wartezeiten?
+```{r}
+```
+
+## RQ4: Wirken sich bestimmte Erkrankungen auf die Länge der Wartezeiten aus?
+```{r}
+```
+
+## RQ5: Gibt es Unterschiede zwischen städtischen und ländlichen Gebieten
+```{r}
+```
+
+
+## RQ6: Was sind die grössten Hürden bei der Therapieplatzsuche?
+```{r}
+###Analyse Freitexte: Datensatz in Excel durchschauen und in neuer Spalte Freitext codieren
